@@ -10,14 +10,14 @@ def coronal(volume, index):
     '''
     Return a coronal slice of the given volume
     '''
-    return np.fliplr(np.rot90(volume[index, ...], 3))
+    return np.rot90(volume[index, ...])
 
 
 def sagittal(volume, index):
     '''
     Return a sagittal slice of the given volume
     '''
-    return np.rot90(volume[:, index, ...], 3)
+    return np.rot90(volume[:, index, ...])
 
 
 def transverse(volume, index):
@@ -58,9 +58,9 @@ class VolumeExplorer:
         self._trans_slider.on_changed(self._update_trans)
 
         # Initialize images
-        self._cor_img = self._cor_ax.imshow(coronal(self._volume, 0), origin='lower')
-        self._sag_img = self._sag_ax.imshow(sagittal(self._volume, 0), origin='lower')
-        self._trans_img = self._trans_ax.imshow(transverse(self._volume, 0), origin='lower')
+        self._cor_img = self._cor_ax.imshow(coronal(self._volume, 0))
+        self._sag_img = self._sag_ax.imshow(sagittal(self._volume, 0))
+        self._trans_img = self._trans_ax.imshow(transverse(self._volume, 0))
         self.set_clim(clim)
         self.set_cmap(cmap)
 
@@ -93,7 +93,7 @@ class VolumeExplorer:
 
     def _update_cor(self, idx):
         idx -= 1
-        self._cor_img.set_data(coronal(self._volume, int(idx)))
+        self._cor_img.set_data(coronal(self._volume, self._volume.shape[0] - int(idx)))  # reverse to match orientation
         self._sag_vline.set_xdata(idx)
         self._trans_hline.set_ydata(idx)
         self._draw()

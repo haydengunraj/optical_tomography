@@ -2,7 +2,8 @@
 
 This repo implements a rough attempt at optical tomography. Essentially, images acquired via light transmitted through a transparent or translucent medium are reconstructed into a 3D volume.
 
-![Explorer](examples/phantom/volexp.png "Explorer") 
+![Raw](examples/phantom/panes.png "Raw")
+![Explorer](examples/phantom/volexp.png "Explorer")
 
 I used a drinking glass with layers of soy sauce, water, and oil, as well as a chopstick passing through all three layers. The reconstruction is recognizable, but suffers from a few artifacts which were likely introduced by:
 - Coarse angular steps of about 11.25 degrees
