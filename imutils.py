@@ -56,6 +56,9 @@ def projective_transform_images(images, original_corners, final_corners):
 
 
 def load_images(path, gray=False):
+    '''
+    Load a list of images
+    '''
     image_files = []
     path = Path(path)
     for ext in EXTENSIONS:

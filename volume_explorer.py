@@ -1,5 +1,4 @@
 import numpy as np
-import argparse
 import matplotlib.pyplot as plt
 from matplotlib import gridspec as gs
 from matplotlib.widgets import Slider
@@ -29,6 +28,9 @@ def transverse(volume, index):
 
 
 class VolumeExplorer:
+    '''
+    Allows for exploration of a 3D volume via coronal, sagittal, and transverse slices
+    '''
     def __init__(self, volume, cmap=None, clim=None):
         # Volume to render
         self._volume = img_as_uint8(volume)
@@ -56,10 +58,11 @@ class VolumeExplorer:
         self._trans_slider.on_changed(self._update_trans)
 
         # Initialize images
-        self._cor_img = self._cor_ax.imshow(coronal(self._volume, 0), cmap=cmap, origin='lower')
-        self._sag_img = self._sag_ax.imshow(sagittal(self._volume, 0), cmap=cmap, origin='lower')
-        self._trans_img = self._trans_ax.imshow(transverse(self._volume, 0), cmap=cmap, origin='lower')
+        self._cor_img = self._cor_ax.imshow(coronal(self._volume, 0), origin='lower')
+        self._sag_img = self._sag_ax.imshow(sagittal(self._volume, 0), origin='lower')
+        self._trans_img = self._trans_ax.imshow(transverse(self._volume, 0), origin='lower')
         self.set_clim(clim)
+        self.set_cmap(cmap)
 
         # Initialize navigation crosshairs
         self._cor_vline = self._cor_ax.axvline(0, color='r')
@@ -115,10 +118,11 @@ class VolumeExplorer:
 
 
 if __name__ == '__main__':
+    import argparse
     # Parse arguments
     PARSER = argparse.ArgumentParser(description='Volume Explorer')
     PARSER.add_argument('directory', help='Directory containing transverse slices of a volume')
-    PARSER.add_argument('--cmap', default=None, help='Colour map')
+    PARSER.add_argument('--cmap', default=None, help='Colour map (ignored if input is RGB)')
     PARSER.add_argument('--clim', default=None, help='Colour limits')
     ARGS = PARSER.parse_args()
 
