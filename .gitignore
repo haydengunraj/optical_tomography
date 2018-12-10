@@ -1,0 +1,15 @@
+# Byte-compiled files
+*.py[cod]
+__pycache__/
+
+# Mac OSX format files
+.DS_Store
+
+# PyCharm files
+.idea/
+
+# Environment
+venv/
+
+# Reconstructed data
+examples/*/volumes
