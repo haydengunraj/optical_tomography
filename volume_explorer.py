@@ -66,11 +66,11 @@ class VolumeExplorer:
 
         # Initialize navigation crosshairs
         self._cor_vline = self._cor_ax.axvline(0, color='r')
-        self._cor_hline = self._cor_ax.axhline(0, color='b')
-        self._sag_vline = self._sag_ax.axvline(0, color='g')
-        self._sag_hline = self._sag_ax.axhline(0, color='b')
+        self._cor_hline = self._cor_ax.axhline(self._volume.shape[2] - 1, color='b')
+        self._sag_vline = self._sag_ax.axvline(self._volume.shape[0] - 1, color='g')
+        self._sag_hline = self._sag_ax.axhline(self._volume.shape[2] - 1, color='b')
         self._trans_vline = self._trans_ax.axvline(0, color='r')
-        self._trans_hline = self._trans_ax.axhline(0, color='g')
+        self._trans_hline = self._trans_ax.axhline(self._volume.shape[0] - 1, color='g')
 
     @staticmethod
     def from_directory(directory):
@@ -93,9 +93,9 @@ class VolumeExplorer:
 
     def _update_cor(self, idx):
         idx -= 1
-        self._cor_img.set_data(coronal(self._volume, self._volume.shape[0] - int(idx)))  # reverse to match orientation
-        self._sag_vline.set_xdata(idx)
-        self._trans_hline.set_ydata(idx)
+        self._cor_img.set_data(coronal(self._volume, self._volume.shape[0] - 1 - int(idx)))  # reverse to match orientation
+        self._sag_vline.set_xdata(self._volume.shape[0] - 1 - idx)
+        self._trans_hline.set_ydata(self._volume.shape[0] - 1 - idx)  # reverse to match orientation
         self._draw()
 
     def _update_sag(self, idx):
@@ -108,8 +108,8 @@ class VolumeExplorer:
     def _update_trans(self, idx):
         idx -= 1
         self._trans_img.set_data(transverse(self._volume, int(idx)))
-        self._cor_hline.set_ydata(idx)
-        self._sag_hline.set_ydata(idx)
+        self._cor_hline.set_ydata(self._volume.shape[2] - 1 - idx)  # reverse to match orientation
+        self._sag_hline.set_ydata(self._volume.shape[2] - 1 - idx)
         self._draw()
 
     def _draw(self):
